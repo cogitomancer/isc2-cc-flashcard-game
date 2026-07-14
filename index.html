@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISC2 CC Flashcards</title>
+    <title>ISC2 CC Study & Match Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>ISC2 CC Study Guide</h1>
-        <div class="stats-container">
-            <p>Cards: <span id="card-counter">0 / 0</span></p>
+        <h1>ISC2 CC Study Portal</h1>
+        <div class="stats-container" id="global-stats-header">
             <p>Known: <span id="known-count" class="success-text">0</span></p>
             <p>Review: <span id="review-count" class="warning-text">0</span></p>
         </div>
@@ -20,19 +19,41 @@
         <section id="setup-section" class="card-panel">
             <h2>Study Setup</h2>
             <div id="error-message" class="error hidden"></div>
+            
             <div class="form-group">
                 <label for="domain-select">Select Domain:</label>
                 <select id="domain-select">
                     <option value="all">All Domains</option>
                     </select>
             </div>
+
+            <div class="form-group">
+                <label for="mode-select">Select Mode:</label>
+                <select id="mode-select">
+                    <option value="study">Flashcard Study Mode</option>
+                    <option value="match">Memory Match Game Mode</option>
+                </select>
+            </div>
+
+            <div id="match-setup-options" class="form-group hidden">
+                <label for="pairs-select">Number of Matching Pairs:</label>
+                <select id="pairs-select">
+                    <option value="6">6 Pairs (12 Cards)</option>
+                    <option value="8">8 Pairs (16 Cards)</option>
+                    <option value="10" selected>10 Pairs (20 Cards)</option>
+                </select>
+            </div>
+
             <div class="button-group">
-                <button id="start-btn" class="primary-btn">Start Studying</button>
-                <button id="reset-progress-btn" class="danger-btn">Reset Progress</button>
+                <button id="start-btn" class="primary-btn">Begin Session</button>
+                <button id="reset-progress-btn" class="danger-btn">Reset All Progress</button>
             </div>
         </section>
 
         <section id="study-section" class="hidden">
+            <div class="deck-info">
+                <span id="card-counter" class="info-badge">0 / 0</span>
+            </div>
             <div class="flashcard-container">
                 <div id="flashcard" class="flashcard" tabindex="0" role="button" aria-label="Flashcard. Press Space or Enter to flip.">
                     <div class="flashcard-inner">
@@ -46,8 +67,7 @@
                             <div class="definition-content">
                                 <h3>Definition:</h3>
                                 <p id="card-definition">Definition goes here</p>
-                                <div id="card-extras" class="extras hidden">
-                                    </div>
+                                <div id="card-extras" class="extras hidden"></div>
                             </div>
                         </div>
                     </div>
@@ -64,7 +84,52 @@
                     <button id="review-btn" class="warning-btn">Needs Review</button>
                     <button id="knew-btn" class="success-btn">I Knew This</button>
                 </div>
-                <button id="back-to-setup-btn" class="text-btn">Back to Setup</button>
+                <button id="back-to-setup-btn" class="text-btn back-btn-action">Back to Setup</button>
+            </div>
+        </section>
+
+        <section id="match-section" class="hidden">
+            <div class="match-hud">
+                <div class="hud-item">Matched: <span id="match-pairs-count">0/0</span></div>
+                <div class="hud-item">Moves: <span id="match-moves-count">0</span></div>
+                <div class="hud-item">Time: <span id="match-timer">00:00</span></div>
+                <div class="hud-item highscore-hud">Best: <span id="match-best-score">None</span></div>
+            </div>
+
+            <div id="match-grid" class="match-grid"></div>
+
+            <div class="controls">
+                <button id="match-quit-btn" class="text-btn back-btn-action">Exit to Setup</button>
+            </div>
+        </section>
+
+        <section id="match-results-section" class="card-panel hidden">
+            <div class="success-animation-wrapper">
+                <span class="trophy-emoji">🏆</span>
+                <h2>Match Game Completed!</h2>
+            </div>
+            
+            <div class="results-stats">
+                <div class="stat-box">
+                    <span class="stat-value" id="result-time">00:00</span>
+                    <span class="stat-label">Completion Time</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value" id="result-moves">0</span>
+                    <span class="stat-label">Total Moves</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-value" id="result-accuracy">0%</span>
+                    <span class="stat-label">Accuracy Rate</span>
+                </div>
+            </div>
+
+            <div id="new-best-alert" class="best-score-badge hidden">🎉 New Personal Best!</div>
+
+            <div class="button-group results-actions">
+                <button id="play-again-btn" class="primary-btn">Play Again</button>
+                <button id="study-matched-btn" class="success-btn">Study These Terms</button>
+                <button id="change-setup-btn" class="secondary-btn">Change Setup</button>
             </div>
         </section>
     </main>
