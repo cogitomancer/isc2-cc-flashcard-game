@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISC2 CC Flashcards</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>ISC2 CC Study Guide</h1>
+        <div class="stats-container">
+            <p>Cards: <span id="card-counter">0 / 0</span></p>
+            <p>Known: <span id="known-count" class="success-text">0</span></p>
+            <p>Review: <span id="review-count" class="warning-text">0</span></p>
+        </div>
+    </header>
 
+    <main>
+        <section id="setup-section" class="card-panel">
+            <h2>Study Setup</h2>
+            <div id="error-message" class="error hidden"></div>
+            <div class="form-group">
+                <label for="domain-select">Select Domain:</label>
+                <select id="domain-select">
+                    <option value="all">All Domains</option>
+                    </select>
+            </div>
+            <div class="button-group">
+                <button id="start-btn" class="primary-btn">Start Studying</button>
+                <button id="reset-progress-btn" class="danger-btn">Reset Progress</button>
+            </div>
+        </section>
+
+        <section id="study-section" class="hidden">
+            <div class="flashcard-container">
+                <div id="flashcard" class="flashcard" tabindex="0" role="button" aria-label="Flashcard. Press Space or Enter to flip.">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <span class="domain-tag" id="card-domain-front"></span>
+                            <h2 id="card-term">Term</h2>
+                            <p class="flip-hint">Click or press Space to reveal definition</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="domain-tag" id="card-domain-back"></span>
+                            <div class="definition-content">
+                                <h3>Definition:</h3>
+                                <p id="card-definition">Definition goes here</p>
+                                <div id="card-extras" class="extras hidden">
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="nav-controls">
+                    <button id="prev-btn" class="secondary-btn" aria-label="Previous Card">&larr; Previous</button>
+                    <button id="reveal-btn" class="secondary-btn">Reveal Answer</button>
+                    <button id="next-btn" class="secondary-btn" aria-label="Next Card">Next &rarr;</button>
+                </div>
+                <div class="action-controls">
+                    <button id="review-btn" class="warning-btn">Needs Review</button>
+                    <button id="knew-btn" class="success-btn">I Knew This</button>
+                </div>
+                <button id="back-to-setup-btn" class="text-btn">Back to Setup</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
